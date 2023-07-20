@@ -1,0 +1,195 @@
+﻿@model DataAccess.Models.UserModel
+@using DataAccess
+@{
+    ViewBag.Title = "Create User";
+    int loggedUser = EagleEye.CommonHelper.Utility.GetCookie("LoggedUserId").ToIntOrZero();
+    var id = Url.RequestContext.RouteData.Values["id"];
+    //var userTypes = new DataAccess.Repository.CommonRepository().GetUserType().Select(n => new SelectListItem()
+    //{
+    //    Text = n.UserType,
+    //    Value = n.UserTypeId.ToString()
+    //});
+
+    //var favoriteCategories = new DataAccess.Repository.UserRepository().GetFavoriteCategories(Model.UserId);
+    //var companyTypes = new DataAccess.Repository.UserRepository().GetCompanyType().Select(n => new SelectListItem()
+    //{
+    //    Text = n.CompanyType,
+    //    Value = n.CompanyTypeId.ToString()
+    //});
+}
+
+<section role="main" class="content-body" id="createFormContainer">
+    <header class="page-header">
+        <h2>Add/Update Details</h2>
+    </header>
+
+    @using (Html.BeginForm("Create", "Users", FormMethod.Post, new { id = "CreateUserForm", @class = "form-horizontal form-bordered" }))
+    {
+        <header class="page-header fixed-button-container">
+            <div class="fixed-button-align">
+                <button type="submit" class="btn btn-success"><i class="fa fa-user"></i>&nbsp;Click To Save</button>
+                @*<button type="button" data-action="cancel" class="btn btn-danger waves-effect text-left"><i class="fa  fa-step-backward"></i>&nbsp;Go Back</button>*@
+                <button type="button" data-action="cancel" class="mb-xs mt-xs mr-xs btn btn-warning"><i class="fa  fa-step-backward"></i>&nbsp;Go Back</button>
+                @Html.HiddenFor(t => t.UserId)
+                @if (Model.UserId == 0)
+                {
+                    <input type="hidden" name="Password" value="12345" />
+                }
+            </div>
+        </header>
+        <section class="panel">
+            <div class="panel-body top-border-bar mt52">
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <h4><b>Personal Details</b></h4>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @*<label class="col-md-2 control-label" for="inputPlaceholder">Company</label>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-building"></i>
+                    </span>
+                    @Html.TextBoxFor(t => t.Company, new { @class = "form-control required-left", @placeholder = "Company" })
+                </div>
+            </div>*@
+                    <label class="control-label col-md-2">Email</label>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                            @if (Model.UserId > 0)
+                            {
+                                @Html.TextBoxFor(t => t.Email, new { @class = "form-control required-left", @placeholder = "Account email", @ReadOnly = "true" })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(t => t.Email, new { @class = "form-control required-left", @placeholder = "Account email" })
+                            }
+
+                            <label id="isExistEmailError" class="custom-error"></label>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="inputPlaceholder">User Name</label>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-user"></i>
+                            </span>
+                            @Html.TextBoxFor(t => t.UserName, new { @class = "form-control required-left", @placeholder = "User name" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="inputPlaceholder">Phone</label>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-graduation-cap"></i>
+                            </span>
+                            @Html.TextBoxFor(t => t.Phone, new { @class = "form-control required-left", @placeholder = "Phone number" })
+                            @*@Html.DropDownListFor(t => t.UserTypeId, userTypes.OrderBy(x => x.Text), "Select User Type", new { @class = "required-left select2 form-control" })*@
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="inputPlaceholder">Gender</label>
+                    <div class="col-md-4">
+                        <div class="input-group input-group-icon">
+                            <input type="radio" name="Gender" @(Model.Gender == "Male" ? " checked " : "") value="Male" />&nbsp;Male&nbsp;
+                            <input type="radio" name="Gender" @(Model.Gender == "Female" ? " checked " : "") value="Female" />&nbsp;Female
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+
+                    <label class="col-md-2 control-label" for="inputPlaceholder">Date Of Birth</label>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-graduation-cap"></i>
+                            </span>
+                            @Html.TextBox("DOB", string.Format("{0:" + EagleEye.CommonHelper.DateTimeFormatter.Style1 + "}", Model.DOB), new { @class = "form-control required-left", @data_plugin_datepicker = "data-plugin-datepicker ", @autocomplete = "off", @placeholder = "Date of birth" })
+                        </div>
+                    </div>
+                </div>
+                @if (Model.UserId > 0)
+                {
+
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <h4><b>Change Password</b></h4>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="inputPlaceholder">Current Password</label>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-key"></i>
+                                </span>
+                                @Html.TextBox("CurrentPassword", "", new { @class = "form-control", @type = "password", @placeholder = "Current Password" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <label class="col-md-2 control-label" for="inputPlaceholder">New Password</label>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-key"></i>
+                                </span>
+                                @Html.TextBox("NewPassword", "", new { @class = "form-control", @type = "password", @placeholder = "New Password" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="inputPlaceholder">Confirm Password</label>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-key"></i>
+                                </span>
+                                @Html.TextBox("ConfirmPassword", "", new { @class = "form-control", @type = "password", @placeholder = "Current Password" })
+                            </div>
+                        </div>
+                      
+                    </div>
+                    <div class="form-group">                    
+                        <label class="col-md-2 control-label" for="inputPlaceholder"></label>
+                        <div class="col-md-4">
+                            <div class="input-group input-group-icon">
+                                <button type="button" id="btnUpdatePassword" class="btn btn-info"><i class="fa fa-key"></i>&nbsp;Update Password</button>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </section>
+        @Html.HiddenFor(t => t.Password)
+    }
+</section>
+
+@section scripts{
+    <script src="~/Content/page-scripts/Users/Create.js"></script>
+    @*<link href="https://cdnjs.cloudflare.com/ajax/libs/cropper/4.0.0/cropper.css" rel="stylesheet">*@
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/4.0.0/cropper.js"></script>*@
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/javascript-canvas-to-blob/3.16.0/js/canvas-to-blob.js" integrity="sha256-SUJhN0pToC7HVMAVypbOQ0+I2z5SO1JIRIZ8qGL8nZo=" crossorigin="anonymous"></script>*@
+    <script type="text/javascript">
+        var user = new createUser();
+        user.createUserUrl = "@Url.Action("Create", "Users")";
+        user.init();
+    </script>
+}

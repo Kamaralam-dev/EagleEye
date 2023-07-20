@@ -1,0 +1,108 @@
+﻿@model IEnumerable<DataAccess.Models.UserModel>
+@using EagleEye.CommonHelper;
+@{
+    ViewBag.Title = "User";
+}
+
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/page-scripts/Users/Index.js"></script>
+    <script type="text/javascript">
+        var user = new listUser();
+        user.getUserUrl = "@Url.Action("GetUsers", "Users")";
+        user.deleteUserUrl = "@Url.Action("Delete", "Users")";
+        user.editUserUrl = "@Url.Action("Create", "Users")";
+        user.userId = "@Convert.ToString(Utility.GetCookie("LoggedUserId"))"       
+        user.init();
+    </script>
+}
+    <style>
+        tr.odd {
+            color: #777;
+        }
+
+        tr.even {
+            color: #777;
+        }
+      
+        
+    </style>
+
+<section role="main" class="content-body">
+    <header class="page-header">
+        <h2>Manage User</h2>
+        @*<div class="right-wrapper pull-right">
+                <ol class="breadcrumbs">
+                    <li>
+                        <a href="index.html">
+                            <i class="fa fa-home"></i>
+                        </a>
+                    </li>
+                    <li><span>Settings</span></li>
+                    <li><span>Manage Users</span></li>
+                </ol>
+
+                <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+            </div>*@
+    </header>
+    @*<section class="panel">
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="@Url.Action("Create","Users")" class="btn btn-primary pull-right">Add <i class="fa fa-plus"></i></a>
+                </div>
+            </div>
+        </section>*@
+
+    <header class="page-header fixed-button-container">
+        <div class="fixed-button-align">
+            @*<div class="col-md-3">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-search"></i>
+                    </span>
+                    <select id="ddlFilter" class="form-control">
+                        <option value="0">All</option>
+                        <option value="1">Approved</option>
+                        <option value="2">Pending Approval</option>
+                    </select>                    
+                </div>
+            </div>*@
+
+          
+            <a href="@Url.Action("Create","Users")" class="btn btn-success  pull-right"><i class="fa fa-plus"></i> &nbsp;Click To Add</a>
+        </div>
+    </header>
+    <section class="panel">
+        <div class="panel-body top-border-bar mt52">
+            <table class="table table-bordered table-striped table-condensed mb-none" cellspacing="0" style="width:100%!important;" id="tableUser">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>Full Name</th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Phone
+                        </th>
+                        <th>
+                            User Type
+                        </th>
+                        <th>
+                            DOB
+                        </th>
+                        <th>
+                            Gender
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </section>
+</section>
+

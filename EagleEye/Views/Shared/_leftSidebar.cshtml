@@ -1,0 +1,81 @@
+﻿@using DataAccess;
+@{
+    bool isSetting = false;    
+    var currentController = Html.Controller().NullToString().ToLower();
+    if (currentController == "users"
+            || currentController == "accounttype"
+            || currentController == "activitytype"
+            || currentController == "activitystatus"
+            || currentController == "industry"
+            || currentController == "leadstatus"
+            || currentController == "rating"
+            || currentController == "source"
+            || currentController == "salestage"
+            || currentController == "service"
+            || currentController == "activitycustomfield"
+            || currentController == "accountcustomfield"
+            || currentController == "contactcustomfield"
+            || currentController == "leadcustomfield"
+            || currentController == "salecustomfield"
+            || currentController == "currency"
+            || currentController == "setting"
+             || currentController == "team"
+             || currentController == "testimonial"
+             || currentController == "faq"
+             || currentController == "quotation"
+             || currentController == "story"
+             || currentController == "affiliate"
+             || currentController == "category"
+             || currentController == "contactus"
+             || currentController == "item"
+             || currentController == "order"
+             || currentController == "payment"
+             || currentController == "term" || currentController == "sponsor")
+
+    {
+        isSetting = true;
+    }
+}
+<aside id="sidebar-left" class="sidebar-left">
+
+    <div class="sidebar-header">
+        <div class="sidebar-title">
+
+            @*@{
+            var title = "Navigation";
+            if (isSetting)
+            {
+                title = "Settings";
+            }
+            else if (currentController == "report")
+            {
+                title = "Reports";
+            }
+        }
+        @title*@
+            &nbsp;
+        </div>
+        @*<div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+            <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+        </div>*@
+    </div>
+
+    <div class="nano">
+        <div class="nano-content">
+            <nav id="menu" class="nav-main" role="navigation">
+                @if (currentController == "all")
+                {
+                    Html.RenderPartial("_navAllMenus");
+                }
+                else if (isSetting)
+                {
+                    Html.RenderPartial("_navSettingMenus");
+                }
+                else if (currentController == "report")
+                {
+                    Html.RenderPartial("_navReportMenus");
+                }
+            </nav>
+        </div>
+    </div>
+</aside>

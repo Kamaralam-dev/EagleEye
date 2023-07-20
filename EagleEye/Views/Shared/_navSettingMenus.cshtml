@@ -1,0 +1,65 @@
+﻿@using DataAccess;
+@{
+    string actionName = this.Html.Action().ToString();
+    bool isGlobalData = true;
+    var currentController = Html.Controller().NullToString().ToLower();
+    if (currentController == "users"
+            || currentController == "accounttype"
+            || currentController == "activitytype"
+            || currentController == "activitystatus"
+            || currentController == "industry"
+            || currentController == "leadstatus"
+            || currentController == "rating"
+            || currentController == "source"
+            || currentController == "salestage"
+            || currentController == "service"
+            || currentController == "currency"
+            || currentController == "setting"
+             || currentController == "team"
+             || currentController == "testimonial"
+             || currentController == "faq"
+             || currentController == "quotation"
+             || currentController == "story"
+             || currentController == "affiliate"
+              || currentController == "category"
+             || currentController == "contactus"
+             || currentController == "item"
+             || currentController == "order"
+             || currentController == "payment"
+             || currentController == "term"
+             || currentController == "setting"
+              || currentController == "sponsor")
+    {
+        isGlobalData = true;
+    }
+
+    if (currentController == "activitycustomfield"
+           || currentController == "accountcustomfield"
+           || currentController == "contactcustomfield"
+           || currentController == "leadcustomfield"
+           || currentController == "salecustomfield")
+    {
+        isGlobalData = false;
+    }
+}
+<ul class="nav nav-main">
+    @*<li class="nav-parent @(isGlobalData?"nav-expanded nav-active":"")">
+            <a>
+                <i class="fa fa-gear" aria-hidden="true"></i>
+                <span>Admin</span>
+            </a>
+        </li>*@
+
+
+    <li class="@(currentController.NullToString().ToLower() == "users" ? "nav-active": "")">
+        <a href="~/Users/index">
+            <i class="fa fa-users"></i>&nbsp;Manage User
+        </a>
+    </li>
+
+    <li class="@(currentController.NullToString().ToLower() == "category" ? "nav-active" : "")">
+        <a href="~/Users/index">
+            <i class="fa fa-sitemap"></i>&nbsp; Menu 2
+        </a>
+    </li>
+</ul>

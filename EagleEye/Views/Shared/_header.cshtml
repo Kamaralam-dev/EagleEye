@@ -1,0 +1,69 @@
+﻿@using DataAccess
+@{
+    int loggedUserId = EagleEye.CommonHelper.Utility.GetCookie("LoggedUserId").ToIntOrZero();
+    var loggedUser = EagleEye.CommonHelper.Utility.GetCookie("LoggedUserName");
+    var id = Url.RequestContext.RouteData.Values["id"];  
+}
+<header class="header">
+    <div class="logo-container">
+        <a href="#" class="logo">
+            <img src="~/Content/images/eagleeye_logo.png" height="50" alt="" />
+        </a>
+        <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+            <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+        </div>
+    </div>
+
+    <!-- start: search & user box -->
+    <div class="header-right">
+
+
+        <div id="userbox" class="userbox">
+            @if (loggedUserId.ToIntOrZero()==0)
+            {
+             
+                <a href="/login/index">
+                    <i class="fa fa-bar-chart-o" aria-hidden="true"></i>
+                    <div class="profile-info">
+                        <span class="name">Login</span>
+                    </div>
+                </a>
+            }
+        </div>
+
+
+        <div id="userbox" class="userbox">
+            <a href="#" data-toggle="dropdown">
+                <figure class="profile-picture">
+                   
+                            <img src="http://pluspng.com/img-png/user-png-icon-male-user-icon-512.png" alt="Joseph Doe" class="img-circle" data-lock-picture="https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100&ssl=1" />
+                       
+                </figure>
+                <div class="profile-info" data-lock-name="John Doe" data-lock-email="@loggedUser">
+                    <span class="name">@(loggedUser.NullToString() == "" ? "" : loggedUser)</span>
+                    @*<span class="role">@(loggedUser.NullToString() == "" ? "" : userType)</span>*@
+                </div>
+                @if (loggedUser.NullToString() != "")
+                {
+                    <i class="fa custom-caret"></i>
+                }
+            </a>
+
+            @if (loggedUser.NullToString() != "")
+            {
+                <div class="dropdown-menu">
+                    <ul class="list-unstyled">
+                        <li class="divider"></li>
+                        
+                        <li>
+                          
+                                <a role="menuitem" tabindex="-1" href="@Url.Action("Logout", "Users")"><i class="fa fa-power-off"></i> Logout</a>
+                          
+                        </li>
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+    <!-- end: search & user box -->
+</header>

@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html class="fixed">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="~/Content/images/favicon.ico" type="image/gif" sizes="16x16">
+
+    <title>@ViewBag.Title | EagleEye</title>
+    <meta name="keywords" content="CRM" />
+    <meta name="description" content="Easy to use CRM">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <!-- Web Fonts  -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+
+    <!-- Vendor CSS -->
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/vendor/font-awesome/css/font-awesome.css" />
+</head>
+<body>
+
+    <section class="body">
+        @{
+            var asd = Html.Controller();
+        }
+
+        <!-- start: header -->
+        @Html.Partial("_header")
+        <!-- end: header -->
+
+        <div class="inner-wrapper">
+            <!-- start: sidebar -->
+            @Html.Partial("_leftSidebar")
+            <!-- end: sidebar -->
+
+            @RenderBody()
+        </div>
+
+        @Html.Partial("_rightSidebar")
+    </section>
+
+    @Scripts.Render("~/bundles/VendorJs")
+    @Scripts.Render("~/bundles/SpecificPageJS")
+    @RenderSection("scripts", required: false)
+    <script>
+        var accountColumnIndex='3,8';
+    </script>
+</body>
+</html>
